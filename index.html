@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhavana Pasula - Senior Java Full Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #151932;
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --text-primary: #e4e6eb;
+            --text-secondary: #b8bcc8;
+            --accent: #4f90f0;
+            --accent-hover: #3b7bd9;
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(79, 144, 240, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            animation-delay: 0.2s;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 144, 240, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-glass);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(79, 144, 240, 0.1);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(79, 144, 240, 0.2);
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(79, 144, 240, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            position: relative;
+        }
+
+        .experience-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            transition: width 0.4s ease;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(79, 144, 240, 0.2);
+            border-color: rgba(79, 144, 240, 0.3);
+        }
+
+        .experience-card:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+
+        .experience-card.animate-in {
+            animation: slideInUp 0.6s forwards;
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .experience-header {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .experience-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .experience-card h4 {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .company-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(79, 144, 240, 0.15);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            border: 1px solid rgba(79, 144, 240, 0.3);
+        }
+
+        .experience-card ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .experience-card li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .experience-card li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .experience-card:hover li::before {
+            transform: translateX(5px);
+        }
+
+        .experience-card li:hover {
+            color: var(--text-primary);
+            transform: translateX(5px);
+        }
+
+        .experience-filter {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+            padding: 20px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            max-width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            background: rgba(79, 144, 240, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(79, 144, 240, 0.3);
+        }
+
+        .experience-card.hidden {
+            display: none;
+        }
+
+        .experience-card.fade-out {
+            animation: fadeOut 0.3s forwards;
+        }
+
+        .experience-card.fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .cert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cert-item {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cert-icon {
+            font-size: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-glass);
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .contact-item svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-filter {
+                border-radius: 16px;
+                padding: 15px;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">BP</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="floating">Bhavana Pasula</h1>
+                <h2>Senior Java Full Stack Developer</h2>
+                <p class="tagline">Designing scalable, secure, and cloud-native full-stack applications.</p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">Contact Me</a>
+                    <a href="#" class="btn btn-secondary">View Resume</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="glass-card">
+                <div class="about-content">
+                    <p>As a Senior Java Full Stack Developer, I specialize in building scalable, secure, and high-performance enterprise applications that drive business value. My expertise spans the complete software development lifecycle, from architecting robust backend systems to crafting intuitive user experiences.</p>
+                    <br>
+                    <p>I bring deep technical proficiency in Java, Spring Boot, and microservices architecture, combined with modern frontend frameworks such as React and Angular. My approach centers on designing clean RESTful APIs, implementing event-driven systems, and developing cloud-native solutions that meet enterprise standards for performance, reliability, and security.</p>
+                    <br>
+                    <p>I'm passionate about writing clean, maintainable code and leveraging best practices in system design, security implementation, and performance optimization. Thriving in collaborative Agile environments, I focus on delivering solutions that not only meet technical requirements but also exceed business expectations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="glass-card skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Java (8/11/17)</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">PL/SQL</span>
+                    </div>
+                </div>
+
+                <div class="glass-card skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">Redux</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Material-UI</span>
+                        <span class="skill-tag">Bootstrap</span>
+                    </div>
+                </div>
+
+                <div class="glass-card skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">Spring Cloud</span>
+                        <span class="skill-tag">Spring Security</span>
+                        <span class="skill-tag">Hibernate</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Microservices</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">GraphQL</span>
+                    </div>
+                </div>
+
+                <div class="glass-card skill-category">
+                    <h3>Databases</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">Oracle</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Cassandra</span>
+                        <span class="skill-tag">Couchbase</span>
+                        <span class="skill-tag">Redis</span>
+                    </div>
+                </div>
+
+                <div class="glass-card skill-category">
+                    <h3>Messaging & Streaming</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Apache Kafka</span>
+                        <span class="skill-tag">Kafka Streams</span>
+                        <span class="skill-tag">RabbitMQ</span>
+                        <span class="skill-tag">ActiveMQ</span>
+                        <span class="skill-tag">Azure Service Bus</span>
+                    </div>
+                </div>
+
+                <div class="glass-card skill-category">
+                    <h3>Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">GitLab CI/CD</span>
+                        <span class="skill-tag">Terraform</span>
+                    </div>
+                </div>
+
+                <div class="glass-card skill-category">
+                    <h3>Monitoring & Testing</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ELK Stack</span>
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">Splunk</span>
+                        <span class="skill-tag">JUnit</span>
+                        <span class="skill-tag">Mockito</span>
+                        <span class="skill-tag">Selenium</span>
+                        <span class="skill-tag">Postman</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Professional Experience</h2>
+            
+            <div class="experience-filter">
+                <button class="filter-btn active" data-company="all">All Experience</button>
+                <button class="filter-btn" data-company="fannie-mae">Fannie Mae</button>
+                <button class="filter-btn" data-company="franklin">Franklin Templeton</button>
+                <button class="filter-btn" data-company="markel">Markel Corp</button>
+                <button class="filter-btn" data-company="photon">Photon</button>
+                <button class="filter-btn" data-company="birla">Birla Soft</button>
+            </div>
+
+            <div class="experience-grid">
+                <div class="experience-card" data-index="0" data-company="fannie-mae">
+                    <div class="experience-header">
+                        <h3>Senior Java Full Stack Developer</h3>
+                        <span class="company-badge">Fannie Mae</span>
+                    </div>
+                    <ul>
+                        <li>Designed and developed Spring Boot microservices supporting business workflows</li>
+                        <li>Built secure REST APIs using OAuth2/JWT and OpenAPI documentation</li>
+                        <li>Developed React-based single-page applications</li>
+                        <li>Implemented Kafka-based event-driven architectures</li>
+                        <li>Deployed containerized applications using Docker and Kubernetes</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card" data-index="1" data-company="franklin">
+                    <div class="experience-header">
+                        <h3>Java Full Stack Developer</h3>
+                        <span class="company-badge">Franklin Templeton</span>
+                    </div>
+                    <ul>
+                        <li>Built microservices using Spring Boot and Quarkus</li>
+                        <li>Integrated Angular and React frontends</li>
+                        <li>Designed Kafka Streams and cloud-native pipelines</li>
+                        <li>Automated CI/CD and infrastructure provisioning</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card" data-index="2" data-company="markel">
+                    <div class="experience-header">
+                        <h3>Java Full Stack Developer</h3>
+                        <span class="company-badge">Markel Corp</span>
+                    </div>
+                    <ul>
+                        <li>Developed Java microservices and REST APIs</li>
+                        <li>Implemented messaging with Kafka and RabbitMQ</li>
+                        <li>Optimized database performance and caching</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card" data-index="3" data-company="photon">
+                    <div class="experience-header">
+                        <h3>Java Developer</h3>
+                        <span class="company-badge">Photon</span>
+                    </div>
+                    <ul>
+                        <li>Built enterprise Java applications using Spring and Hibernate</li>
+                        <li>Deployed applications on WebLogic and Tomcat</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card" data-index="4" data-company="birla">
+                    <div class="experience-header">
+                        <h3>Java Developer</h3>
+                        <span class="company-badge">Birla Soft</span>
+                    </div>
+                    <ul>
+                        <li>Developed Java Spring MVC applications and REST APIs</li>
+                        <li>Worked with JSP, Servlets, and relational databases</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education & Certifications</h2>
+            <div class="education-grid">
+                <div class="glass-card">
+                    <h3 style="color: var(--accent); margin-bottom: 10px;">Master of Science</h3>
+                    <p style="font-weight: 600; margin-bottom: 5px;">Computer Science</p>
+                    <p style="color: var(--text-secondary);">California State University, San Bernardino</p>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--accent); margin-bottom: 10px;">Bachelor of Technology</h3>
+                    <p style="font-weight: 600; margin-bottom: 5px;">Computer Science Engineering</p>
+                    <p style="color: var(--text-secondary);">Ace Engineering College, Hyderabad</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 50px;">
+                <h3 class="section-title" style="font-size: 2rem;">Certifications</h3>
+                <div class="cert-list">
+                    <div class="cert-item">
+                        <div class="cert-icon">🏆</div>
+                        <div>
+                            <h4 style="color: var(--text-primary); margin-bottom: 5px;">AWS Certified Solutions Architect – Associate</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Amazon Web Services</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <div>
+                            <p style="font-weight: 600;">Email</p>
+                            <a href="mailto:chinnupasula123@gmail.com" style="color: var(--text-secondary); text-decoration: none;">chinnupasula123@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <div>
+                            <p style="font-weight: 600;">Phone</p>
+                            <a href="tel:+18402062098" style="color: var(--text-secondary); text-decoration: none;">+1 (840) 206-2098</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                        </svg>
+                        <div>
+                            <p style="font-weight: 600;">LinkedIn</p>
+                            <a href="#" style="color: var(--text-secondary); text-decoration: none;">Connect on LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <form class="contact-form" onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Bhavana Pasula. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0s';
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Experience cards animation
+        const experienceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    const index = card.getAttribute('data-index');
+                    setTimeout(() => {
+                        card.classList.add('animate-in');
+                    }, index * 150);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.experience-card').forEach(card => {
+            experienceObserver.observe(card);
+        });
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            e.target.reset();
+        }
+
+        // Experience filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const selectedCompany = this.getAttribute('data-company');
+                const cards = document.querySelectorAll('.experience-card');
+
+                cards.forEach(card => {
+                    const cardCompany = card.getAttribute('data-company');
+                    
+                    if (selectedCompany === 'all' || cardCompany === selectedCompany) {
+                        card.classList.remove('hidden', 'fade-out');
+                        card.classList.add('fade-in');
+                    } else {
+                        card.classList.add('fade-out');
+                        setTimeout(() => {
+                            card.classList.add('hidden');
+                            card.classList.remove('fade-out');
+                        }, 300);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
